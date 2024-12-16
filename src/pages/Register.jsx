@@ -1,12 +1,20 @@
+import { useContext } from "react";
+import AuthContext from "../Context/AuthContext";
 
 
 export default function Register() {
+    const { createUser } = useContext(AuthContext)
     const handleSubmit = (e) => {
         e.preventDefault();
-        const formData = new FormData(e.target)
-        const data = Object.fromEntries(formData.entries())
-        console.log(data);
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
 
+        // create user using email and password
+        createUser(email, password)
+            .then(res => {
+                console.log(res.user);
+            })
     }
     return (
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl mx-auto">

@@ -1,9 +1,15 @@
+import { useContext } from "react"
 import { Link, NavLink } from "react-router-dom"
+import AuthContext from "../Context/AuthContext"
 
 
 export default function Navbar() {
+    const { logOut, user } = useContext(AuthContext)
     const links = <>
         <li><NavLink to={'/'}>Home </NavLink> </li>
+        {
+            user?.email && <li><NavLink to={'/add-job'}>Add Jobs </NavLink> </li>
+        }
     </>
     return (
         <div className="navbar bg-base-100">
@@ -36,9 +42,14 @@ export default function Navbar() {
                     {links}
                 </ul>
             </div>
-            <div className="navbar-end gap-3">
-                <Link to={'/login'} className="btn btn-primary">Log in</Link>
-                <Link to={'/register'} className="btn btn-primary">Register</Link>
+            <div className="navbar-end">
+                {
+                    user?.email ? <button className="btn btn-secondary" onClick={logOut}>Log out</button> : <div className="flex items-center gap-3">
+                        <Link to={'/login'} className="btn btn-primary">Log in</Link>
+                        <Link to={'/register'} className="btn btn-primary">Register</Link>
+                    </div>
+
+                }
             </div>
         </div>
     )
