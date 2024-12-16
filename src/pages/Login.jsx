@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import AuthContext from "../Context/AuthContext";
+import axios from "axios";
 
 export default function Login() {
     const { signIn } = useContext(AuthContext)
@@ -13,11 +14,17 @@ export default function Login() {
         signIn(email, password)
             .then(res => {
                 console.log(res.user);
+                axios.post('http://localhost:5001/api/jwt', {
+                    email: email
+                }, { withCredentials: true })
+                    .then(res => console.log(res.data));
             })
             .catch((err) => {
                 console.log(err.message);
 
             })
+
+
     }
     return (
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl mx-auto">

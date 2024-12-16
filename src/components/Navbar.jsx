@@ -8,7 +8,10 @@ export default function Navbar() {
     const links = <>
         <li><NavLink to={'/'}>Home </NavLink> </li>
         {
-            user?.email && <li><NavLink to={'/add-job'}>Add Jobs </NavLink> </li>
+            user?.email && <>
+                <li><NavLink to={'/add-job'}>Add Jobs </NavLink> </li>
+                <li><NavLink to={'/find-job'}>Find Jobs </NavLink> </li>
+            </>
         }
     </>
     return (

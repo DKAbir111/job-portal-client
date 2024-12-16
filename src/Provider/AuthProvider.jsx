@@ -6,14 +6,16 @@ import { useEffect, useState } from "react";
 
 export default function AuthProvider({ children }) {
     const [user, setUser] = useState('')
-
+    const [loading, setLoading] = useState(true)
 
     //create user
     const createUser = (email, password) => {
+        setLoading(true)
         return createUserWithEmailAndPassword(auth, email, password)
     }
     //sign in with email and password
     const signIn = (email, password) => {
+        setLoading(true)
         return signInWithEmailAndPassword(auth, email, password);
     }
 
@@ -21,7 +23,7 @@ export default function AuthProvider({ children }) {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser)
-            console.log(currentUser)
+            setLoading(false)
         })
 
         return (() => {
@@ -42,7 +44,8 @@ export default function AuthProvider({ children }) {
         signIn,
         createUser,
         logOut,
-        user
+        user,
+        loading
     }
     return (
         <AuthContext.Provider value={authInfo}>
